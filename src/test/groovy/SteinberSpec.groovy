@@ -33,6 +33,10 @@ class SteinberSpec extends GebReportingSpec {
         to SteinbergRegisterPage
         log.info("Steinberg opened")
 
+        then: "Click agree button"
+        Utils.clickElement(agreeBtn, "Clicked agree button", true)
+        Thread.sleep(1000)
+
         String mailValue = ""
         String winHandleBefore = driver.getWindowHandle()
         // Set up anti-captcha and create mail box
@@ -61,15 +65,12 @@ class SteinberSpec extends GebReportingSpec {
             }
             driver.switchTo().window(winHandleBefore)
         } catch (Exception e) {
-
+            log.error(e.getMessage(), e)
+            driver.close()
         } catch (org.openqa.selenium.WebDriverException we) {
             log.error("WebDriver exception.")
+            driver.close()
         }
-
-
-        then: "Click agree button"
-        Utils.clickElement(agreeBtn, "Clicked agree button", true)
-        Thread.sleep(5000)
 
         then: "Input user name"
         String[] mailInfos = mailValue.split("@")
@@ -107,6 +108,7 @@ class SteinberSpec extends GebReportingSpec {
             }
             if (counter == 50) {
                 log.error("Cannot resolve captcha")
+                driver.close()
                 assert false
             }
         }
@@ -177,7 +179,7 @@ class SteinberSpec extends GebReportingSpec {
          */
         then: "Close"
         Thread.sleep(2000)
-        driver.close()
+        driver.quit()
 
         where:
             passwordValue << jutils.get("PASSWORD")
