@@ -10,10 +10,6 @@ class SteinberSpec extends GebReportingSpec {
 
     @Shared
             jutils = new JSONUtils()
-    @Shared
-            mail1 = new MailReader().getMails(jutils.getConfig("MAIL_PATH_1"))
-    @Shared
-            mail2 = new MailReader().getMails(jutils.getConfig("MAIL_PATH_2"))
 
     private static final Logger logger = Logger.getLogger("ExternalAppLogger")
 
@@ -27,16 +23,6 @@ class SteinberSpec extends GebReportingSpec {
     "Steinberg register"() {
 
         log.info("---------------------------------------CASE_ID: -----------------------------------------------")
-        if (mail1.size() <= 0) {
-            log.error("Can not find any email for register")
-            System.exit(0)
-            assert false
-        }
-        if (mail2.size() <= 0) {
-            log.error("Please check list2mail.txt")
-            assert false
-        }
-        long waitTime = jutils.getConfig("SIGN_UP_WAIT") * 1000
 
         // Connect to VPN and change ip address
 //        Utils.execCmd("\"c:\\Program Files (x86)\\HMA! Pro VPN\\bin\\HMA! Pro VPN.exe\" -changeip")
@@ -47,20 +33,30 @@ class SteinberSpec extends GebReportingSpec {
         to SteinbergRegisterPage
         log.info("Steinberg opened")
 
-        // Set up anti-captcha
+        String mailValue = ""
+        String winHandleBefore = driver.getWindowHandle()
+        // Set up anti-captcha and create mail box
         try {
-            String winHandleBefore = driver.getWindowHandle()
             driver.executeScript('''return window.open("google.com", "_blank")''')
             for (String winHandle : driver.getWindowHandles()) {
                 if (winHandle != winHandleBefore) {
                     driver.switchTo().window(winHandle)
                     driver.get("chrome-extension://lncaoejhfdpcafpkkcddpjnhnodcajfg/options.html")
                     Thread.sleep(2000)
-                    driver.executeScript('''return $("input[name='account_key'").val("f8228269a43caf2e25ebfafef82515dd");''')
+                    driver.executeScript('''return $("input[name='account_key'").val("''' + jutils.getConfig("ANTI_CAPTCHA_KEY") + '''");''')
                     Thread.sleep(100)
                     driver.executeScript('''return $("#save").click();''')
                     sleep(1000)
-                    driver.close()
+
+                    driver.get(mailBox)
+                    Thread.sleep(5000)
+                    mailValue = $("#email").text()
+                    if (mailValue.isEmpty()) {
+                        log.error("Cannot create email at ${mailBox}")
+                        assert false
+                    }
+                    log.info("At mail box page")
+                    log.info("Email: ${mailValue}")
                 }
             }
             driver.switchTo().window(winHandleBefore)
@@ -70,20 +66,20 @@ class SteinberSpec extends GebReportingSpec {
             log.error("WebDriver exception.")
         }
 
+
         then: "Click agree button"
         Utils.clickElement(agreeBtn, "Clicked agree button", true)
         Thread.sleep(5000)
 
         then: "Input user name"
-        String[] mailInfos = mail1.get(0).split("@")
+        String[] mailInfos = mailValue.split("@")
+        String usernameValue = mailInfos[0].replaceAll("\\.", "${Utils.randomInt(999, 1)}")
         if (mailInfos.size() > 1) {
-            Utils.selectByValue(username, mailInfos[0], "User name")
-        } else {
-            Utils.selectByValue(username, mail1.get(0), "User name")
+            Utils.selectByValue(username, usernameValue, "User name")
         }
 
         then: "Input email"
-        Utils.selectByValue(email, mail1.get(0), "Email")
+        Utils.selectByValue(email, mailValue, "Email")
 
         then: "Input password"
         Utils.selectByValue(password, passwordValue, "Password")
@@ -109,18 +105,84 @@ class SteinberSpec extends GebReportingSpec {
                 }
                 counter++
             }
+            if (counter == 50) {
+                log.error("Cannot resolve captcha")
+                assert false
+            }
         }
 
         then: "Input captcha"
         Utils.clickElement(submitBtn, "Clicked submit button", true)
-        Thread.sleep(9000000)
+        Thread.sleep(7000)
+
+        String errMsg = $("#register dl dd.error").text()
+        log.info("Message: ${errMsg}")
+
+        when: "At information page"
+        at InformationPage
+        log.info("At information page")
+        String info = $("#message p").text()
+        String message
+        String verifyUrl
+        if (info.contains("created")) {
+            log.info(info)
+            for (String winHandle : driver.getWindowHandles()) {
+                if (winHandle != winHandleBefore) {
+                    driver.switchTo().window(winHandle)
+                    driver.navigate().refresh()
+                    Thread.sleep(3000)
+                    $("#schranka td.from")[0].click()
+                    driver.switchTo().frame("iframeMail")
+                    message = $("body").text()
+                    log.info("Email: ${message}")
+                    if (message.contains("Welcome to www.steinberg.net")) {
+                        def matcher = message =~ /(account: https:\/\/)(.+\/)+(.+\?)(\w+=\w+&?)+/
+                        if (matcher.find()) {
+                            verifyUrl = matcher.group().replace("account: ", "")
+                            log.info("Verify url: ${verifyUrl}")
+                        } else {
+                            log.error("Cannot found verify url in email from steinberg.net")
+                        }
+                    } else {
+                        log.error("Cannot found email from steinberg.net")
+                    }
+                }
+            }
+        }
+        then: "Go to verify url"
+        driver.get(verifyUrl)
+        Thread.sleep(10000)
+        Utils.selectByValue($("#username"), usernameValue, "Login with username")
+        Thread.sleep(500)
+        Utils.selectByValue($("#password"), passwordValue, "Login with password")
+        Utils.clickElement($("input[type='submit']"), "Clicked button login", true)
+        Thread.sleep(7000)
+
+        when: "At steinberg forum"
+        at SteinbergForum
+        log.info("At steinberg forum")
+        // Go to steinberg profile page
+        then: "Go to edit profile page"
+        driver.get("https://www.steinberg.net/forums/ucp.php?i=ucp_profile&mode=profile_info")
+        Thread.sleep(7000)
+
+        when: "At edit profile page"
+        at ProfilePage
+        log.info("At edit profile page")
+        Utils.selectByValue($("#pf_phpbb_website"), profileWebsite, "Profile website")
+        Utils.clickElement($("input[type='submit']"), "Clicked button submit", true)
+        Thread.sleep(10000)
+        /**
+         * Welcome to www.steinberg.net forums Please keep this email for your records. Your account information is as follows: ---------------------------- Username: elyna203mariajose Board URL: https://www.steinberg.net/forums ---------------------------- Please visit the following link in order to activate your account: https://www.steinberg.net/forums/ucp.php?mode=activate&u=109699&k=1EYOAM2P Your password has been securely stored in our database and cannot be retrieved. In the event that it is forgotten, you will be able to reset it using the email address associated with your account. Thank you for registering. -- Steinberg Media Technologies GmbH, Beim Strohhause 31,20097 Hamburg, Germany Phone: +49 (40) 21035-0 | www.steinberg.net President: Andreas Stelling Managing Director: Thomas Schöpe, Yoshiyuki Tsugawa
+         */
+        then: "Close"
+        Thread.sleep(2000)
         driver.close()
+
         where:
-            domainValue << jutils.get("DOMAIN")
             passwordValue << jutils.get("PASSWORD")
-            countryCodeValue << jutils.get("COUNTRY_CODE")
-            zipCodeValue << jutils.get("ZIP_CODE")
-            genderValue << jutils.get("GENDER")
+            mailBox << jutils.get("MAIL_BOX")
+            profileWebsite << jutils.get("PROFILE_WEBSITE")
     }
 
 }

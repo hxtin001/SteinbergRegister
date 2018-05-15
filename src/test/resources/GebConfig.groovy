@@ -16,7 +16,7 @@ File findDriverExecutable() {
 driver = {
     def jutils = new JSONUtils()
     ChromeOptions options = new ChromeOptions()
-    options.addExtensions(new File("/home/hxtin001/tinhx/software/anti-captcha-extention/anticaptcha-plugin_v0.1807.crx"))
+    options.addExtensions(new File(jutils.getConfig("ANTI_CAPTCHA_EXTENSION_PATH")))
     options.addArguments("test-type")
     options.addArguments("start-maximized")
     options.addArguments("disable-infobars")
