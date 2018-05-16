@@ -3,7 +3,7 @@
     {
       "USER_AGENT": "Mozilla/5.0 (X11; CrOS x86_64 10066.0.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36",
       "MAIL_PATH_1": "list1mail.txt",
-      "ANTI_CAPTCHA_KEY": "f8228269a43caf2e25ebfafef82515dd",
+      "ANTI_CAPTCHA_KEY": "",
       "ANTI_CAPTCHA_EXTENSION_PATH": "/home/hxtin001/tinhx/software/anti-captcha-extention/anticaptcha-plugin_v0.1807.crx"
     }
   ],
