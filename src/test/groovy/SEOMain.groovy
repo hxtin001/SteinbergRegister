@@ -1,6 +1,6 @@
 import spock.util.EmbeddedSpecRunner
 
-class SteinberRegisterMain {
+class SEOMain {
 
     static void main(String[] args) {
         def ignoring = { Class<? extends Throwable> catchMe, Closure callMe ->
@@ -14,7 +14,7 @@ class SteinberRegisterMain {
         }
         EmbeddedSpecRunner embeddedSpecRunner = new EmbeddedSpecRunner()
         ignoring(org.openqa.selenium.NoSuchSessionException){
-            embeddedSpecRunner.runClass(SteinberSpec.class)
+            embeddedSpecRunner.runClass(SEOSpec.class)
         }
 
     }

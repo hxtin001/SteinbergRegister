@@ -15,13 +15,18 @@ File findDriverExecutable() {
 
 driver = {
     def jutils = new JSONUtils()
+    UserAgentReader usrAgentReader = new UserAgentReader()
+    ArrayList<String> agents = usrAgentReader.getAgents("User-agent.txt")
+
     ChromeOptions options = new ChromeOptions()
     options.addExtensions(new File(jutils.getConfig("ANTI_CAPTCHA_EXTENSION_PATH")))
+    options.addExtensions(new File(jutils.getConfig("VPN_EXTENSION_PATH")))
     options.addArguments("test-type")
     options.addArguments("start-maximized")
     options.addArguments("disable-infobars")
-    options.addArguments("--disable-web-security")
-    options.addArguments("--user-agent=" + jutils.getConfig("USER_AGENT"))
+//    options.addArguments("--disable-web-security")
+    print("--user-agent=" + agents.get(Utils.randomInt(agents.size(), 0)))
+    options.addArguments("--user-agent=" + agents.get(Utils.randomInt(agents.size(), 0)))
     ChromeDriverService service = new ChromeDriverService.Builder()
             .usingAnyFreePort()
             .usingDriverExecutable(findDriverExecutable())
@@ -38,4 +43,4 @@ waiting {
 
 reportsDir = "target/reports"
 
-baseUrl = "https://www.steinberg.net/forums/ucp.php?mode=register"
+baseUrl = "https://www.google.com/"

@@ -2,13 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>tintin.com.vn</groupId>
-  <artifactId>SteinbergRegister</artifactId>
+  <artifactId>SEOTool</artifactId>
   <packaging>jar</packaging>
   <version>1</version>
-  <name>Steinberg register</name>
+  <name>SEO tool</name>
   <url>http://gebish.org</url>
   <properties>
-    <gebVersion>1.1.1</gebVersion>
     <seleniumVersion>3.0.1</seleniumVersion>
     <groovyVersion>2.4.7</groovyVersion>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -41,8 +40,7 @@
     <dependency>
       <groupId>org.gebish</groupId>
       <artifactId>geb-spock</artifactId>
-      <version>${gebVersion}</version>
-      <scope>runtime</scope>
+      <version>2.1</version>
     </dependency>
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
@@ -50,7 +48,6 @@
       <version>${seleniumVersion}</version>
       <scope>test</scope>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-support -->
 	<dependency>
 	    <groupId>org.seleniumhq.selenium</groupId>
 	    <artifactId>selenium-support</artifactId>
@@ -61,7 +58,6 @@
       <artifactId>log4j</artifactId>
       <version>1.2.17</version>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/org.json/json -->
     <dependency>
       <groupId>org.json</groupId>
       <artifactId>json</artifactId>
@@ -86,7 +82,7 @@
           <archive>
             <manifest>
               <addClasspath>true</addClasspath>
-              <mainClass>groovy.SteinberRegisterMain</mainClass>
+              <mainClass>groovy.SEOMain</mainClass>
             </manifest>
           </archive>
         </configuration>
@@ -152,7 +148,7 @@
             <name>chromedriver</name>
             <version>2.37</version>
 				<!--             linux or mac or windows -->
-            <platform>linux</platform>
+            <platform>windows</platform>
           </driver>
         </drivers>
       </configuration>

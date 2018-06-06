@@ -35,13 +35,4 @@ class JSONUtils {
         return result
     }
 
-    def getTestCase() {
-        def result = new ArrayList<String>()
-        data = parseJSON()
-        data.TESTS.eachWithIndex{item, index ->
-            result.add(index.toString())
-        }
-        return  result
-    }
-
 }

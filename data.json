@@ -1,22 +1,25 @@
 {
   "CONFIG": [
     {
-      "USER_AGENT": "Mozilla/5.0 (X11; CrOS x86_64 10066.0.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36",
-      "MAIL_PATH_1": "list1mail.txt",
-      "ANTI_CAPTCHA_KEY": "",
-      "ANTI_CAPTCHA_EXTENSION_PATH": "/home/hxtin001/tinhx/software/anti-captcha-extention/anticaptcha-plugin_v0.1807.crx"
+      "USER_AGENT": "",
+      "ANTI_CAPTCHA_KEY": "f8228269a43caf2e25ebfafef82515dd",
+      "HMA_PATH": "\"c:\\Program Files (x86)\\HMA! Pro VPN\\bin\\HMA! Pro VPN.exe\"",
+      "ANTI_CAPTCHA_EXTENSION_PATH": "/home/hoxuantin/tinhx/softs/anticaptcha-plugin_v0.1807.crx",
+      "VPN_EXTENSION_PATH": "/home/hoxuantin/tinhx/softs/hnmpcagpplmpfojmgmnngilcnanddlhb-2.3.6-Crx4Chrome.com.crx",
+      "VPN_EXTENSION_USERNAME": "ruaconx11",
+      "VPN_EXTENSION_PASS": "123456aa",
+      "IS_USE_HMA": false,
+      "VPN_WAIT": 30
     }
   ],
   "TESTS": [
     {
-      "PASSWORD": "p*n$99abcd123*",
-      "MAIL_BOX": "https://www.minuteinbox.com/",
-      "PROFILE_WEBSITE": "taokhienfacebook.com"
+      "KEY_SEARCH": "ho xuan tin",
+      "URL": "facebook.com"
     },
     {
-      "PASSWORD": "p*n$99abcd123*",
-      "MAIL_BOX": "https://www.minuteinbox.com/",
-      "PROFILE_WEBSITE": "taokhienfacebook.com"
+      "KEY_SEARCH": "ho xuan tin",
+      "URL": "facebook.com"
     }
   ]
 }

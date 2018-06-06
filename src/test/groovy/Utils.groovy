@@ -1,10 +1,6 @@
-import geb.Browser
 import geb.error.GebException
-import groovy.json.JsonOutput
 import groovy.util.logging.Log4j
-import org.openqa.selenium.Cookie
 import org.openqa.selenium.StaleElementReferenceException
-import org.openqa.selenium.chrome.ChromeDriver
 
 import javax.imageio.ImageIO
 import java.awt.image.BufferedImage
@@ -15,9 +11,7 @@ import java.util.zip.ZipFile
 @Log4j
 class Utils {
 
-    private static final String DESTINATION_FOLDER = "target/reports/SteinberSpec/"
-    private static final String HTML2CAVAS_PATH = "libs/html2canvas.js"
-    static final String CAPTCHA_FOLDER = "target/reports/SteinberSpec"
+    static final String CAPTCHA_FOLDER = "target/reports/SEOSpec"
     static final String CAPTCHA = "/captcha.png"
     static final NAME_LIST = ["NGUYEN", "TRAN", "LE",
                               "HUYNH", "DUONG", "NGO",
@@ -35,7 +29,7 @@ class Utils {
 
     static File getDriver()
             throws URISyntaxException, ZipException, IOException {
-        URI jarUri = SteinberRegisterMain.class.getProtectionDomain().getCodeSource().getLocation().toURI()
+        URI jarUri = SEOMain.class.getProtectionDomain().getCodeSource().getLocation().toURI()
         return new File(getFile(jarUri, getDriverName()))
     }
 
@@ -251,29 +245,6 @@ class Utils {
         }
     }
 
-    static void cropImage(captchaLocations){
-        try {
-            String captchaPath = getCaptchaPath(CAPTCHA_FOLDER)
-            log.info("Captcha path ${captchaPath}")
-            BufferedImage originalImgage = ImageIO.read(new File(captchaPath))
-            log.info("Original Image Dimension: ${originalImgage.getWidth()}  x ${originalImgage.getHeight()}")
-            BufferedImage SubImgage = originalImgage.getSubimage(captchaLocations.get(0), captchaLocations.get(1), captchaLocations.get(2), captchaLocations.get(3))
-            log.info("Cropped Image Dimension: ${SubImgage.getWidth()} x ${SubImgage.getHeight()}")
-
-            // Save image
-            File outputfile = new File(CAPTCHA_FOLDER + CAPTCHA)
-            ImageIO.write(SubImgage, "png", outputfile)
-            log.info("Image cropped successfully: ${outputfile.getPath()}")
-
-        } catch (IOException e) {
-            log.error("Can not crop captcha image", e)
-            assert false
-        } catch (Exception e) {
-            log.error("Can not crop captcha image", e)
-            assert false
-        }
-    }
-
     static String getCaptchaPath(String folder) throws Exception {
         String path = ""
         int index = -1
@@ -294,11 +265,6 @@ class Utils {
             log.error(e.getMessage(), e)
         }
         return path
-    }
-
-    static String getCookiesAsString(Browser browser) {
-        Set<Cookie> cookies = browser.driver.manage().getCookies()
-        return JsonOutput.toJson(cookies)
     }
 
     /**
