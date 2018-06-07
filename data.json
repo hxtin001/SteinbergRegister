@@ -9,12 +9,12 @@
   ],
   "TESTS": [
     {
-      "PASSWORD": "p*n$99abcd123*",
+      "PASSWORD": "",
       "MAIL_BOX": "https://www.minuteinbox.com/",
       "PROFILE_WEBSITE": "taokhienfacebook.com"
     },
     {
-      "PASSWORD": "p*n$99abcd123*",
+      "PASSWORD": "",
       "MAIL_BOX": "https://www.minuteinbox.com/",
       "PROFILE_WEBSITE": "taokhienfacebook.com"
     }
