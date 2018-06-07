@@ -25,7 +25,7 @@ driver = {
     options.addArguments("start-maximized")
     options.addArguments("disable-infobars")
 //    options.addArguments("--disable-web-security")
-    print("--user-agent=" + agents.get(Utils.randomInt(agents.size(), 0)))
+    println("--user-agent=" + agents.get(Utils.randomInt(agents.size(), 0)))
     options.addArguments("--user-agent=" + agents.get(Utils.randomInt(agents.size(), 0)))
     ChromeDriverService service = new ChromeDriverService.Builder()
             .usingAnyFreePort()

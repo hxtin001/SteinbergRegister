@@ -9,17 +9,20 @@
       "VPN_EXTENSION_USERNAME": "ruaconx11",
       "VPN_EXTENSION_PASS": "123456aa",
       "IS_USE_HMA": false,
-      "VPN_WAIT": 30
+      "VPN_WAIT": 30,
+      "WAIT_AT_PAGE": 15
     }
   ],
   "TESTS": [
     {
-      "KEY_SEARCH": "ho xuan tin",
-      "URL": "facebook.com"
+      "KEY_SEARCH": ["ketoanthuchanh.vn"],
+      "URL": "hocketoanthuchanh.vn",
+      "LINK_CSS_SELECTOR": ["#content a.button", ".main ul li a"]
     },
     {
-      "KEY_SEARCH": "ho xuan tin",
-      "URL": "facebook.com"
+      "KEY_SEARCH": ["khoahoc.ketoanthuchanh.vn"],
+      "URL": "hocketoanthuchanh.vn",
+      "LINK_CSS_SELECTOR": ["#content a.button", ".main ul li a"]
     }
   ]
 }

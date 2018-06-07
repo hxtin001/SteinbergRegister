@@ -109,7 +109,7 @@ class SEOSpec extends GebReportingSpec {
                     def randInt = Utils.randomInt(4, 0)
                     log.info("Location: ${locationElements[randInt]}")
                     locationElements[randInt].click()
-                    Thread.sleep(vpnWait)
+                    Thread.sleep(3000)
                 }
             }
         } catch (Exception e) {
@@ -130,7 +130,7 @@ class SEOSpec extends GebReportingSpec {
         driver.navigate().refresh()
 
         Thread.sleep(7000)
-        $("input[name='q']").value(keySearchVal + Keys.ENTER)
+        $("input[name='q']").value(keySearchVals.get(Utils.randomInt(keySearchVals.size(), 0)) + Keys.ENTER)
 
         Thread.sleep(7000)
         def urlElements = $("div#ires .g h3 a")
@@ -171,12 +171,29 @@ class SEOSpec extends GebReportingSpec {
         }
 
         then: "Close"
-        Thread.sleep(2000)
+        Thread.sleep(7000)
+        driver.executeScript('''return window.scrollTo(0, 500);''')
+        Thread.sleep(3000)
+        driver.executeScript('''return window.scrollTo(0, 500);''')
+        cssSelectors.each {
+            try {
+                driver.executeScript('''document.querySelector("''' + it + '''").click();''')
+            } catch (Exception e) {
+                log.error(e.getMessage(), e)
+            } catch (org.openqa.selenium.WebDriverException we) {
+                log.error("WebDriver exception.")
+            }
+        }
+        Thread.sleep(jutils.getConfig("WAIT_AT_PAGE") * 1000)
+        driver.executeScript('''return window.scrollTo(0, 500);''')
+        driver.executeScript('''return window.scrollTo(0, 0);''')
+        Thread.sleep(5000)
         driver.quit()
 
         where:
-            keySearchVal << jutils.get("KEY_SEARCH")
+            keySearchVals << jutils.get("KEY_SEARCH")
             urlVal << jutils.get("URL")
+            cssSelectors << jutils.get("LINK_CSS_SELECTOR")
     }
 
 }
