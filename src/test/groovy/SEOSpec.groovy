@@ -58,6 +58,7 @@ class SEOSpec extends GebReportingSpec {
                     driver.executeScript('''return $("input[name='account_key'").val("''' + jutils.getConfig("ANTI_CAPTCHA_KEY") + '''");''')
                     Thread.sleep(100)
                     driver.executeScript('''return $("#save").click();''')
+                    Thread.sleep(2000)
                     driver.close()
                 }
             }
@@ -135,11 +136,6 @@ class SEOSpec extends GebReportingSpec {
         Thread.sleep(7000)
         def urlElements = $("div#ires .g h3 a")
         int size = urlElements.size()
-        if (size <= 0) {
-            log.error("Cannot find any element: div#ires .g h3 a")
-            assert false
-        }
-
         boolean flag = false
         for(int i = 0; i < size; i++) {
             def text = urlElements[i].getAttribute("href")
@@ -172,9 +168,13 @@ class SEOSpec extends GebReportingSpec {
 
         then: "Close"
         Thread.sleep(7000)
-        driver.executeScript('''return window.scrollTo(0, 500);''')
+        driver.executeScript('''return setTimeout(function () {
+            window.scrollTo(0, 900);
+        },5);''')
         Thread.sleep(3000)
-        driver.executeScript('''return window.scrollTo(0, 500);''')
+        driver.executeScript('''return setTimeout(function () {
+            window.scrollTo(900, 0);
+        },5);''')
         cssSelectors.each {
             try {
                 driver.executeScript('''document.querySelector("''' + it + '''").click();''')
@@ -185,8 +185,13 @@ class SEOSpec extends GebReportingSpec {
             }
         }
         Thread.sleep(jutils.getConfig("WAIT_AT_PAGE") * 1000)
-        driver.executeScript('''return window.scrollTo(0, 500);''')
-        driver.executeScript('''return window.scrollTo(0, 0);''')
+        driver.executeScript('''return setTimeout(function () {
+            window.scrollTo(0, 900);
+        },5);''')
+        Thread.sleep(3000)
+        driver.executeScript('''return setTimeout(function () {
+            window.scrollTo(900, 0);
+        },5);''')
         Thread.sleep(5000)
         driver.quit()
 

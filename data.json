@@ -2,12 +2,12 @@
   "CONFIG": [
     {
       "USER_AGENT": "",
-      "ANTI_CAPTCHA_KEY": "f8228269a43caf2e25ebfafef82515dd",
+      "ANTI_CAPTCHA_KEY": "",
       "HMA_PATH": "\"c:\\Program Files (x86)\\HMA! Pro VPN\\bin\\HMA! Pro VPN.exe\"",
       "ANTI_CAPTCHA_EXTENSION_PATH": "/home/hoxuantin/tinhx/softs/anticaptcha-plugin_v0.1807.crx",
       "VPN_EXTENSION_PATH": "/home/hoxuantin/tinhx/softs/hnmpcagpplmpfojmgmnngilcnanddlhb-2.3.6-Crx4Chrome.com.crx",
       "VPN_EXTENSION_USERNAME": "ruaconx11",
-      "VPN_EXTENSION_PASS": "123456aa",
+      "VPN_EXTENSION_PASS": "",
       "IS_USE_HMA": false,
       "VPN_WAIT": 30,
       "WAIT_AT_PAGE": 15
