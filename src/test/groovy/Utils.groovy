@@ -105,15 +105,15 @@ class Utils {
     }
 
     private static String getDriverName() {
-        String name = ""
-        if(isWindows()) {
-            name = "chromedriver-windows-32bit.exe"
-        } else if(isLinux()) {
-            name = "chromedriver-linux-64bit"
-        } else {
-            name = "chromedriver-mac-64bit"
-        }
-        return name
+//        String name = ""
+//        if(isWindows()) {
+//            name = "chromedriver-windows-32bit.exe"
+//        } else if(isLinux()) {
+//            name = "chromedriver-linux-64bit"
+//        } else {
+//            name = "chromedriver-mac-64bit"
+//        }
+        return "geckoderiver"
     }
 
     private static getOSName() {

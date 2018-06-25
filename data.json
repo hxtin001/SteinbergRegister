@@ -2,27 +2,32 @@
   "CONFIG": [
     {
       "USER_AGENT": "",
-      "ANTI_CAPTCHA_KEY": "",
+      "ANTI_CAPTCHA_KEY": "f8228269a43caf2e25ebfafef82515dd",
       "HMA_PATH": "\"c:\\Program Files (x86)\\HMA! Pro VPN\\bin\\HMA! Pro VPN.exe\"",
       "ANTI_CAPTCHA_EXTENSION_PATH": "/home/hoxuantin/tinhx/softs/anticaptcha-plugin_v0.1807.crx",
-      "VPN_EXTENSION_PATH": "/home/hoxuantin/tinhx/softs/hnmpcagpplmpfojmgmnngilcnanddlhb-2.3.6-Crx4Chrome.com.crx",
+      "VPN_EXTENSION_PATH": "/home/hoxuantin/tinhx/softs/windscribe",
       "VPN_EXTENSION_USERNAME": "ruaconx11",
-      "VPN_EXTENSION_PASS": "",
+      "VPN_EXTENSION_PASS": "123456aa",
       "IS_USE_HMA": false,
-      "VPN_WAIT": 30,
-      "WAIT_AT_PAGE": 15
+      "VPN_WAIT": 5,
+      "WAIT_AT_PAGE": 15,
+      "GOCKO_DRIVER": "/home/hoxuantin/tinhx/softs/geckodriver",
+      "FIREFOX": "/usr/bin/firefox"
     }
   ],
   "TESTS": [
     {
-      "KEY_SEARCH": ["ketoanthuchanh.vn"],
-      "URL": "hocketoanthuchanh.vn",
-      "LINK_CSS_SELECTOR": ["#content a.button", ".main ul li a"]
+      "FIRST_LINK": [""],
+      "KEY_SEARCH": ["tao khien facebook"],
+      "URL": "taokhienfacebook.com/",
+      "LINK_CSS_SELECTOR": ["#content a.button", "#menu-item-91 > a"],
+      "OPEN_URL": ["http://google.com", "http://yahoo.com"]
     },
     {
       "KEY_SEARCH": ["khoahoc.ketoanthuchanh.vn"],
       "URL": "hocketoanthuchanh.vn",
-      "LINK_CSS_SELECTOR": ["#content a.button", ".main ul li a"]
+      "LINK_CSS_SELECTOR": ["#content a.button", "#menu-item-91 > a"],
+      "OPEN_URL": ["http://google.com", "http://yahoo.com"]
     }
   ]
 }

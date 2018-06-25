@@ -37,6 +37,7 @@ class SEOSpec extends GebReportingSpec {
         to GoogleSearchPage
         log.info("At google search page")
 
+        /*
         String winHandleBefore = driver.getWindowHandle()
         Thread.sleep(4000)
         for (String winHandle : driver.getWindowHandles()) {
@@ -46,7 +47,9 @@ class SEOSpec extends GebReportingSpec {
             }
         }
         driver.switchTo().window(winHandleBefore)
+        */
 
+        /*
         Thread.sleep(2000)
         try {
             driver.executeScript('''return window.open("", "_blank")''')
@@ -127,10 +130,16 @@ class SEOSpec extends GebReportingSpec {
                 driver.close()
             }
         }
+        */
+        /*
         driver.switchTo().window(winHandleBefore)
         driver.navigate().refresh()
+        */
 
-        Thread.sleep(7000)
+
+
+
+        //=================Firefox==============
         $("input[name='q']").value(keySearchVals.get(Utils.randomInt(keySearchVals.size(), 0)) + Keys.ENTER)
 
         Thread.sleep(7000)
@@ -169,11 +178,11 @@ class SEOSpec extends GebReportingSpec {
         then: "Close"
         Thread.sleep(7000)
         driver.executeScript('''return setTimeout(function () {
-            window.scrollTo(0, 900);
+            window.scrollTo(0, 1500);
         },5);''')
         Thread.sleep(3000)
         driver.executeScript('''return setTimeout(function () {
-            window.scrollTo(900, 0);
+            window.scrollTo(1500, 0);
         },5);''')
         cssSelectors.each {
             try {
@@ -186,19 +195,21 @@ class SEOSpec extends GebReportingSpec {
         }
         Thread.sleep(jutils.getConfig("WAIT_AT_PAGE") * 1000)
         driver.executeScript('''return setTimeout(function () {
-            window.scrollTo(0, 900);
+            window.scrollTo(0, 1500);
         },5);''')
         Thread.sleep(3000)
         driver.executeScript('''return setTimeout(function () {
-            window.scrollTo(900, 0);
+            window.scrollTo(1500, 0);
         },5);''')
-        Thread.sleep(5000)
+
+        Thread.sleep(7000)
         driver.quit()
 
         where:
             keySearchVals << jutils.get("KEY_SEARCH")
             urlVal << jutils.get("URL")
             cssSelectors << jutils.get("LINK_CSS_SELECTOR")
+            openUrls << jutils.get("OPEN_URL")
     }
 
 }
