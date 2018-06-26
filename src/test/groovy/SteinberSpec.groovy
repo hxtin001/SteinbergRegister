@@ -87,6 +87,12 @@ class SteinberSpec extends GebReportingSpec {
 
         then: "Confirm password"
         Utils.selectByValue(confirmPassword, passwordValue, "Confirm password")
+
+        then: "Click Administrators can email me information YES"
+        Utils.clickElement($("#massemail1"), "Cliked Administrators can email me information YES", true)
+
+        then: "Click Privacy and Policy Stement read and accepted YES"
+        Utils.clickElement($("#privacy1"), "Cliked Privacy Policy Stement read and accepted", true)
         Thread.sleep(1000)
 
         String captchaStatus = $("div.antigate_solver a.status").text()
@@ -174,9 +180,6 @@ class SteinberSpec extends GebReportingSpec {
         Utils.selectByValue($("#pf_phpbb_website"), profileWebsite, "Profile website")
         Utils.clickElement($("input[type='submit']"), "Clicked button submit", true)
         Thread.sleep(10000)
-        /**
-         * Welcome to www.steinberg.net forums Please keep this email for your records. Your account information is as follows: ---------------------------- Username: elyna203mariajose Board URL: https://www.steinberg.net/forums ---------------------------- Please visit the following link in order to activate your account: https://www.steinberg.net/forums/ucp.php?mode=activate&u=109699&k=1EYOAM2P Your password has been securely stored in our database and cannot be retrieved. In the event that it is forgotten, you will be able to reset it using the email address associated with your account. Thank you for registering. -- Steinberg Media Technologies GmbH, Beim Strohhause 31,20097 Hamburg, Germany Phone: +49 (40) 21035-0 | www.steinberg.net President: Andreas Stelling Managing Director: Thomas Schöpe, Yoshiyuki Tsugawa
-         */
         then: "Close"
         Thread.sleep(2000)
         driver.quit()
